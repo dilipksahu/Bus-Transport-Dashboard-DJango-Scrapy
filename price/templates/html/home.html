@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search Bus Trip Price</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  </head>
+  <body>
+      
+    <div class="testbox">
+
+    <form action="/home/" method="post">
+        {% csrf_token %}
+      <!-- <div class="banner">
+        <h1>Research Application Form</h1>
+      </div> -->
+     
+      <div class="item">
+          
+          <div class="city-item">
+          <select name="source" required>
+            <option value="">Select From City</option>
+            {% for i in location %}                                                       
+                <option {% if i.name == from_station %} selected {% endif %}  value="{{i.code}}">{{i.name}}</option>
+            {% endfor %}
+          </select>
+          <select name="destination" required>
+            <option value="">Select To City</option>
+            {% for i in location %}                                                       
+                <option {% if i.name == to_station %} selected {% endif %}  value="{{i.code}}">{{i.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="item">
+        <p>Date</p>
+        <input type="date" name="tdate" value="{{start_date}}" required/>
+        <i class="fas fa-calendar-alt"></i>
+      </div>
+      <div class="btn-block">
+        <button type="submit" href="/">Submit</button>
+      </div>
+      
+      
+    </form>
+   
+    </div>
+    {% if success  %}
+    <!-- <hr/> -->
+    <div class="banner" > 
+      <img alt="Barchart" center width="98%" height="360px" src="{% get_media_prefix%}barchart.png" />
+    </div>
+    {% elif success == False %}
+    <h2 style="text-align: center;">No Trip Found!</h2>
+    {% endif %}
+  </body>
+</html>
